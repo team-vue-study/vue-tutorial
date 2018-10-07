@@ -1,0 +1,22 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app-5">
+        <ol>
+            <ul v-for="item in list" v-if="item % 15 ==0">fizzBuzz</ul>
+            <ul v-else-if="item % 5 ==0">buzzlightyear</ul>
+            <ul v-else-if="item % 3 ==0">fizzy</ul>
+            <ul v-else>{{item}}</ul>
+   
+        </ol>
+        <script src="index.js"></script>
+    </div>
+</body>
+
+
+</html>
