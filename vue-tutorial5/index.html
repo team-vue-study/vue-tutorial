@@ -1,0 +1,16 @@
+<html>
+
+<head>
+    <script src="../../node_modules/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+            <p style="color:aqua; font-size: 30px;">hogehoge</p>
+            <p v-bind:style="{color:activeColor, fontSize:fontSize + 'px'}">foo</p>
+            <p :style="{color:activeColor, fontSize:fontSize + 'px'}">fugafuga</p>
+    </div>
+    <script src="index.js"></script>
+</body>
+
+</html>
