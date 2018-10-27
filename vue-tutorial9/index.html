@@ -10,10 +10,14 @@
 
 <body>
     <div id="app">
-        <trump v-bind:cards="hand"></trump>
-        <p>合計値は:{{totalValue}}</p>
-        <button v-on:click="draw()">俺のターンドロー</button>
-        <button v-on:click="count">バトルフェイズだ！！</button>
+        <p>{{message}}</p>
+        <p>ディーラーの合計値は:{{dealer.totalValue}}</p>
+        <dealer-hands v-bind:cards="dealer.hand"></dealer-hands>
+        
+        <p>プレイヤーの合計値は:{{player.totalValue}}</p>
+        <player-hands v-bind:cards="player.hand"></player-hands>
+        <button v-on:click="playerDraw">俺のターンドロー</button>
+        <button v-on:click="battle">バトルフェイズだ！！</button>
     </div>
     <script src="index.js"></script>
 </body>
