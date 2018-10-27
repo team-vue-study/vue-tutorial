@@ -13,11 +13,13 @@
         <p>{{message}}</p>
         <p>ディーラーの合計値は:{{dealer.totalValue}}</p>
         <dealer-hands v-bind:cards="dealer.hand"></dealer-hands>
-        
+        <br>
+        <br>
+        <br>
+        <button v-on:click="playerDraw">俺のターンドロー</button>
         <p>プレイヤーの合計値は:{{player.totalValue}}</p>
         <player-hands v-bind:cards="player.hand"></player-hands>
-        <button v-on:click="playerDraw">俺のターンドロー</button>
-        <button v-on:click="battle">バトルフェイズだ！！</button>
+        <button v-on:click="stand">バトルフェイズだ！！</button>
     </div>
     <script src="index.js"></script>
 </body>

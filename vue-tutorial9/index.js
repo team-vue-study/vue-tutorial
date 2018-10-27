@@ -1,10 +1,10 @@
 Vue.component('player-hands', {
   props: ['cards'],
-  template: '<div>プレイヤー<li v-for="card in cards">{{card.number}}{{card.suit}}</li></div>'
+  template: '<div>プレイヤー<li v-for="card in cards">{{card.symbolNumber}}{{card.suit}}</li></div>'
 })
 Vue.component('dealer-hands', {
   props: ['cards'],
-  template: '<div>ディーラー<li v-for="card in cards">{{card.number}}{{card.suit}}</li></div>'
+  template: '<div>ディーラー<li v-for="card in cards">{{card.symbolNumber}}{{card.suit}}</li></div>'
 })
 
 var app = new Vue({
@@ -23,12 +23,16 @@ var app = new Vue({
     },
     deck: [
       {
+        symbolNumber: 1,
         number: 1,
-        suit: '♥'
+        suit: '♥',
+
       }, {
+        symbolNumber: 2,
         number: 2,
         suit: '♠'
       }, {
+        symbolNumber: 3,
         number: 3,
         suit: '♦'
       }
@@ -46,23 +50,30 @@ var app = new Vue({
         user.totalValue += value.number;
       }
     },
-    judge: function (user) {
+    judgeBurst: function (user) {
       if (user.totalValue > 21) {
         if (user.name == 'ディーラー') {
-          this.message = 'はいディラーの負け'
+          this.message = 'はいディラーのバースト'
         } else {
-          this.message = 'はい' + user.name + 'の負け'
+          this.message = 'はい' + user.name + 'のバースト'
         }
       }
     },
+    stand: function() {
+      while (this.dealer.totalValue < 17 && this.dealer.totalValue < this.player.totalValue) {
+        this.dealerDraw();
+      }
+      if(this.dealer.totalValue > this.player.totalValue) {
+        this.message = 'うふふディーラーの勝ちね'
+      }
+      this.judgeBurst(this.dealer);
+    },
     playerDraw: function () {
       this.draw(this.player);
-      this.judge(this.player);
+      this.judgeBurst(this.player);
     },
     dealerDraw: function () {
       this.draw(this.dealer);
-      this.judge(this.dealer);
-    },
-    battle: function () {}
+    }
   }
 })
