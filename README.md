@@ -1,0 +1,4 @@
+# vue-tutorial-takatani
+takataniがvue勉強会でやってるおベンキョ
+
+tutorial9ではチュートリアルといいながらブラックジャックを作っている
