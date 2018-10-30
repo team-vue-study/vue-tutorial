@@ -1,15 +1,50 @@
 Vue.component('player-hands', {
   props: ['cards'],
-  template: '<div>プレイヤー<li v-for="card in cards">{{card.symbolNumber}}{{card.suit}}</li></div>'
+  template: '<div>プレイヤー<li v-for="card in cards">{{card.symbolNumber}}{{card.suit}}</li></div' +
+      '>'
 })
 Vue.component('dealer-hands', {
   props: ['cards'],
-  template: '<div>ディーラー<li v-for="card in cards">{{card.symbolNumber}}{{card.suit}}</li></div>'
+  template: '<div>ディーラー<li v-for="card in cards">{{card.symbolNumber}}{{card.suit}}</li></div' +
+      '>'
 })
 
 var app = new Vue({
   el: '#app',
   data: {
+    suits: [
+      "♠", "♦", "♣", "♥"
+    ],
+    numbers: [
+      "A",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "J",
+      "Q",
+      "K"
+    ],
+    values: [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      10,
+      10,
+      10
+    ],
     message: 'ディラー「勝負しましょ」',
     player: {
       name: 'あなた',
@@ -21,33 +56,33 @@ var app = new Vue({
       totalValue: 0,
       hand: new Array
     },
-    deck: [
-      {
-        symbolNumber: 1,
-        number: 1,
-        suit: '♥',
-
-      }, {
-        symbolNumber: 2,
-        number: 2,
-        suit: '♠'
-      }, {
-        symbolNumber: 3,
-        number: 3,
-        suit: '♦'
-      }
-    ]
+    deck: []
   },
   mounted: function () {
+    this.makeDeck();
     this.dealerDraw();
   },
   methods: {
+    makeDeck: function () {
+      for (var i = 0; i < suits.length; i++) {
+        for (var x = 0; x < values.length; x++) {
+          var card = {
+            symbolNumber: this.numbers[x],
+            value: this.values[x],
+            suit: this.suits[i]
+          };
+          this
+            .deck
+            .push(card);
+        }
+      }
+    },
     draw: function (user) {
       user
         .hand
         .push(this.deck[Math.floor(Math.random() * this.deck.length)]);
-      for (var value of user.hand) { // オブジェクトの中のプロパティ名を取り出す。
-        user.totalValue += value.number;
+      for (var card of user.hand) { // オブジェクトの中のプロパティ名を取り出す。
+        user.totalValue += card.value;
       }
     },
     judgeBurst: function (user) {
@@ -59,11 +94,11 @@ var app = new Vue({
         }
       }
     },
-    stand: function() {
+    stand: function () {
       while (this.dealer.totalValue < 17 && this.dealer.totalValue < this.player.totalValue) {
         this.dealerDraw();
       }
-      if(this.dealer.totalValue > this.player.totalValue) {
+      if (this.dealer.totalValue > this.player.totalValue) {
         this.message = 'うふふディーラーの勝ちね'
       }
       this.judgeBurst(this.dealer);
